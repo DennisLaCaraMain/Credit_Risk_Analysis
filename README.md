@@ -1,32 +1,35 @@
 # Credit Risk Assessment & Default Prediction
 
 ## Obiettivo del Progetto
-Questo progetto implementa un modello predittivo in Python per calcolare la probabilità che un richiedente risulti insolvente su un prestito bancario[cite: 1]. Utilizza il dataset storico **German Credit Data**, focalizzandosi su un'analisi chiara e un'ottimizzazione mirata alla minimizzazione dei rischi aziendali[cite: 1].
+Questo progetto implementa un modello predittivo in Python strutturato per calcolare la probabilità di insolvenza su un prestito bancario. Utilizzando il dataset **German Credit Data**, l'analisi supera la semplice accuratezza statistica per adottare una prospettiva gestionale: le probabilità estratte dal modello servono a ottimizzare le decisioni di erogazione, minimizzando i costi operativi aziendali.
 
-## Variabili Chiave del Modello
-L'algoritmo incrocia il profilo demografico e finanziario del cliente.
+## Struttura del Dataset e Variabili Chiave
+L'algoritmo valuta il profilo di rischio incrociando i dati demografici con gli attributi finanziari.
 
 **Variabile Target ('credito'):**
-*   **1 (Buon Pagatore):** Cliente a basso rischio che rispetta gli obblighi[cite: 2].
-*   **0 (Default):** Cliente insolvente o con ritardi significativi[cite: 2].
+*   **1 (Buon Pagatore):** Cliente a basso rischio che rispetta gli obblighi.
+*   **0 (Default):** Cliente insolvente o con ritardi.
 
 **Features Predittive:**
-*   **Età e Anzianità Lavorativa:** I clienti molto giovani presentano generalmente un rischio maggiore, mentre l'anzianità aziendale funge da forte indicatore di stabilità del reddito[cite: 4].
-*   **Conto Corrente:** Misura la liquidità immediata per far fronte agli impegni a breve termine[cite: 3].
-*   **Patrimonio:** Rappresenta la solidità a lungo termine. Immobili, veicoli o investimenti fungono da garanzia (collaterale) in caso di insolvenza[cite: 3].
+*   **Età e Anzianità Lavorativa:** Utilizzate per isolare il rischio demografico e valutare la stabilità del reddito nel tempo.
+*   **Conto Corrente:** Misura della liquidità immediata per gli impegni a breve termine.
+*   **Patrimonio:** Misura della solidità a lungo termine che funge da garanzia (collaterale) per l'istituto.
 
-## Strumenti Utilizzati
-La pipeline di analisi è costruita sulle librerie standard di Data Science[cite: 1]:
-*   **Pandas:** Utilizzato per l'esplorazione dei dati, la gestione dei valori mancanti (NaN) e l'aggregazione per fasce d'età[cite: 1, 5].
-*   **Scikit-Learn:** Impiegato per l'addestramento del **Random Forest Classifier**, generando probabilità di default percentuali al posto di semplici etichette binarie[cite: 1].
-*   **Matplotlib:** Utilizzato per la visualizzazione dell'output in un grafico a barre finale[cite: 1].
+## Stack Tecnologico
+La pipeline di Data Science riflette le operazioni implementate nel file `main.py`:
+*   **Pandas:** Utilizzato per il caricamento, la pulizia dei dati mancanti (`dropna`) e la segmentazione avanzata delle età in categorie strutturate tramite la funzione `pd.cut()`.
+*   **Scikit-Learn:** Impiegato per l'addestramento del **Random Forest Classifier**. Attraverso la funzione `predict_proba()`, il modello non restituisce un'etichetta rigida, ma calcola l'esatta percentuale statistica di default per ogni cliente.
+*   **Matplotlib:** Utilizzato per la generazione di grafici a barre aggregati che confrontano le fasce d'età con la probabilità media di insolvenza, eliminando il rumore statistico.
 
-## Analisi dei Rischi (Matrice di Confusione)
-Le probabilità generate dal modello aiutano l'istituto di credito a bilanciare due errori critici[cite: 1]:
+## Impatto di Business e Matrice di Confusione
+Il risultato espresso in probabilità percentuali permette all'istituto di impostare soglie decisionali strategiche, bilanciando due tipologie di errore dal peso economico radicalmente diverso:
 
 | Esito Modello | Il cliente paga (Realtà) | Il cliente NON paga (Realtà) |
 | :--- | :--- | :--- |
-| **Prestito Erogato** (Modello: Sicuro) | Vero Positivo | **Falso Positivo (Danno economico enorme)** |
-| **Prestito Rifiutato** (Modello: A Rischio) | **Falso Negativo (Mancato guadagno)** | Vero Negativo |
+| **Prestito Erogato** | Vero Positivo (Guadagno) | **Falso Positivo (Danno enorme)** |
+| **Prestito Rifiutato** | **Falso Negativo (Mancato incasso)** | Vero Negativo (Perdita evitata) |
 
-L'obiettivo principale del modello è minimizzare i **Falsi Positivi** (erogare il prestito a chi non paga), accettando un lieve incremento dei **Falsi Negativi** (rifiutare un cliente affidabile), poiché la perdita del capitale erogato rappresenta il danno maggiore per la banca[cite: 1].
+*   **Il Falso Positivo (Rischio Primario):** Si verifica quando il modello classifica erroneamente il cliente come sicuro e la banca eroga i fondi. Genera una perdita diretta del capitale prestato.
+*   **Il Falso Negativo (Costo Opportunità):** Si verifica quando il modello è eccessivamente prudente e rifiuta un cliente affidabile. Causa alla banca un mancato guadagno sui potenziali interessi attivi.
+
+L'architettura di questo modello è orientata a minimizzare i Falsi Positivi, tutelando attivamente la liquidità e i bilanci dell'istituto di credito.
