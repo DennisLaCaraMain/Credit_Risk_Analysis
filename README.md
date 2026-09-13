@@ -3,8 +3,6 @@
 ## 🎯 Obiettivo del Progetto
 Questo progetto ha l'obiettivo di sviluppare un modello predittivo in Python capace di calcolare la probabilità che un nuovo richiedente non restituisca un prestito bancario. L'analisi si basa su dataset storici reali, come il **German Credit Data** (focalizzato su dati demografici e finanziari essenziali) e l'**Home Credit Default Risk** (orientato al credito al consumo).
 
-Il progetto non si limita alla pura accuratezza statistica, ma adotta una prospettiva di ingegneria gestionale: le metriche tecniche del modello vengono tradotte in un'analisi diretta dell'impatto economico e dei costi operativi per l'istituto di credito.
-
 ## 🛠️ Stack Tecnologico e Metodologia
 L'intera pipeline di Data Science è stata costruita utilizzando le librerie standard del settore:
 *   **Pandas & NumPy:** Utilizzati per la Data Exploration, l'identificazione dei valori mancanti (NaN) e il trattamento degli outlier (es. anomalie nei redditi dichiarati) per garantire l'affidabilità del modello. I valori continui (come il patrimonio) sono stati normalizzati per ottimizzare le prestazioni degli algoritmi.
