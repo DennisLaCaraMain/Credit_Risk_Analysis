@@ -1,4 +1,3 @@
-```markdown
 # Credit Risk Assessment & Default Prediction
 
 ## Obiettivo del Progetto
@@ -31,5 +30,3 @@ Le probabilità generate dal modello aiutano l'istituto di credito a bilanciare 
 | **Prestito Rifiutato** (Modello: A Rischio) | **Falso Negativo (Mancato guadagno)** | Vero Negativo |
 
 L'obiettivo principale del modello è minimizzare i **Falsi Positivi** (erogare il prestito a chi non paga), accettando un lieve incremento dei **Falsi Negativi** (rifiutare un cliente affidabile), poiché la perdita del capitale erogato rappresenta il danno maggiore per la banca[cite: 1].
-
-```
