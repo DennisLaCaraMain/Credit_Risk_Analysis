@@ -1,36 +1,36 @@
 # Credit Risk Assessment & Default Prediction
 
-## 🎯 Obiettivo del Progetto
-Questo progetto ha l'obiettivo di sviluppare un modello predittivo in Python capace di calcolare la probabilità che un nuovo richiedente non restituisca un prestito bancario. L'analisi si basa su dataset storici reali, come il **German Credit Data** (focalizzato su dati demografici e finanziari essenziali) e l'**Home Credit Default Risk** (orientato al credito al consumo).
+## Obiettivo del Progetto
+Questo progetto implementa un modello predittivo in Python strutturato per calcolare la probabilità che un richiedente risulti insolvente su un prestito bancario[cite: 1]. Utilizzando il dataset storico **German Credit Data**, l'analisi supera la semplice accuratezza statistica per adottare una prospettiva di ingegneria gestionale[cite: 1]. Le probabilità estratte dal modello servono come base per ottimizzare le decisioni di erogazione e quantificare l'impatto sui costi aziendali[cite: 1].
 
-## 🛠️ Stack Tecnologico e Metodologia
-L'intera pipeline di Data Science è stata costruita utilizzando le librerie standard del settore:
-*   **Pandas & NumPy:** Utilizzati per la Data Exploration, l'identificazione dei valori mancanti (NaN) e il trattamento degli outlier (es. anomalie nei redditi dichiarati) per garantire l'affidabilità del modello. I valori continui (come il patrimonio) sono stati normalizzati per ottimizzare le prestazioni degli algoritmi.
-*   **Matplotlib & Seaborn:** Impiegati per la visualizzazione dei dati, permettendo di generare grafici chiari che mostrano l'andamento del tasso di insolvenza in relazione a variabili chiave come le fasce d'età o i livelli di reddito.
-*   **Scikit-Learn:** Utilizzato per l'addestramento del modello di classificazione vero e proprio, implementando algoritmi solidi come la **Logistic Regression** e il **Random Forest**.
+## Struttura del Dataset e Variabili Chiave
+L'algoritmo valuta il profilo di rischio incrociando i dati demografici con gli attributi finanziari.
 
-## 📊 Variabile Target e Profilazione Storica
-Il modello si basa sull'assunto fondamentale che lo storico creditizio (prestiti passati, rimborsi, ritardi) sia il miglior predittore del comportamento futuro. 
+**Variabile Target ('credito'):**
+*   **1 (Buon Pagatore):** Cliente a basso rischio che rispetta gli obblighi finanziari[cite: 3].
+*   **0 (Default):** Cliente insolvente o con ritardi significativi[cite: 3].
 
-La variabile da prevedere ("Rischio Credito") è stata codificata in modo binario:
-*   **1 = Buon Pagatore (Non-Default):** Cliente a basso rischio che rispetta gli obblighi finanziari.
-*   **0 = Cattivo Pagatore (Default):** Cliente insolvente o con ritardi significativi.
+**Features Predittive Utilizzate:**
+*   **Età e Anzianità Lavorativa:** L'età permette di isolare il rischio fisiologico maggiore tipico dei clienti più giovani, mentre l'anzianità aziendale funge da indicatore primario di stabilità del reddito[cite: 5].
+*   **Conto Corrente:** Misura la liquidità immediata per far fronte agli impegni a breve termine[cite: 4].
+*   **Patrimonio:** Rappresenta la solidità a lungo termine. Funge da garanzia (collaterale) in caso di insolvenza, riducendo il rischio effettivo per la banca[cite: 4].
 
-## 🔍 Variabili Predittive (Features)
-L'algoritmo valuta diverse categorie di attributi per definire il profilo di rischio:
-*   **Dati Demografici:** Valuta l'interazione tra età, stato civile e anzianità lavorativa. Ad esempio, l'anzianità aziendale funge da indicatore primario per la stabilità del reddito, mentre i clienti molto giovani presentano generalmente un rischio fisiologico maggiore.
-*   **Attributi di Liquidità:** Analizza i fondi immediatamente disponibili tramite il conto corrente (Checking Account) e la capacità di assorbire imprevisti tramite il conto di risparmio (Savings Account).
-*   **Attributi Patrimoniali (Property/Assets):** Il possesso di un'abitazione, di veicoli o investimenti indica stabilità a lungo termine. La presenza di un patrimonio diversificato fornisce alla banca una garanzia tangibile (collaterale) in caso di insolvenza.
+## Stack Tecnologico e Pipeline
+La pipeline di Data Science riflette esattamente le operazioni implementate nel codice principale dello script, utilizzando strumenti focalizzati sull'estrazione di valore decisionale:
 
-## 💼 Impatto di Business: La Matrice di Confusione
-Il valore reale di questo modello risiede nella sua capacità di ottimizzare le decisioni di erogazione, bilanciando due tipologie di errore statistico che hanno un peso economico radicalmente diverso per la banca:
+*   **Pandas:** Motore centrale dell'esplorazione e manipolazione dati[cite: 1]. È stato utilizzato per il caricamento del dataset Excel, la pulizia dei valori mancanti (`dropna`), la trasformazione delle variabili categoriche in numeriche (`get_dummies`) e la segmentazione avanzata delle età in categorie strutturate (`pd.cut`) per l'aggregazione finale.
+*   **Scikit-Learn:** Impiegato per l'addestramento del modello di classificazione[cite: 1]. Lo script implementa in modo specifico l'algoritmo **Random Forest Classifier**. Attraverso l'uso della funzione `predict_proba()`, il modello calcola l'esatta percentuale statistica di default per ogni cliente analizzato, fornendo un dato continuo invece di un'etichetta rigida.
+*   **Matplotlib:** Utilizzato per la visualizzazione dell'output in ottica di business[cite: 1]. Il codice genera un grafico a barre aggregato che confronta le fasce d'età con la probabilità media di insolvenza prevista dal modello, eliminando il rumore statistico.
+
+## Impatto di Business e Matrice di Confusione
+Il risultato in probabilità percentuali permette all'istituto di credito di impostare soglie di tolleranza strategiche, bilanciando due tipologie di errore statistico che presentano pesi economici radicalmente diversi per la banca[cite: 1]:
 
 | Esito Modello | Il cliente paga (Realtà) | Il cliente NON paga (Realtà) |
 | :--- | :--- | :--- |
-| **Prestito Erogato** (Modello: Sicuro) | Vero Positivo (Guadagno standard) | **Falso Positivo (Danno enorme)** |
+| **Prestito Erogato** (Modello: Sicuro) | Vero Positivo (Guadagno) | **Falso Positivo (Danno economico enorme)** |
 | **Prestito Rifiutato** (Modello: A Rischio) | **Falso Negativo (Mancato guadagno)** | Vero Negativo (Perdita evitata) |
 
-*   **Il Falso Positivo (Il Rischio Maggiore):** Si verifica quando il modello classifica erroneamente un cliente come sicuro, spingendo la banca a erogare il prestito a un soggetto che si rivelerà insolvente. Questo rappresenta un **danno economico enorme** dovuto alla perdita diretta del capitale prestato. (Nota: l'impatto di questo errore è mitigato se il cliente possiede un patrimonio solido che funge da garanzia).
-*   **Il Falso Negativo (Il Costo Opportunità):** Si verifica quando il modello è eccessivamente prudente e classifica a rischio un cliente affidabile. Questo si traduce in un **mancato guadagno** (interessi persi) per l'istituto di credito.
+*   **Il Falso Positivo (Il Rischio Primario):** Si verifica quando il modello classifica erroneamente il cliente come sicuro e la banca eroga i fondi[cite: 1]. Genera una perdita diretta del capitale prestato[cite: 1].
+*   **Il Falso Negativo (Il Costo Opportunità):** Si verifica quando il modello è eccessivamente prudente e rifiuta un cliente affidabile[cite: 1]. Causa alla banca un mancato incasso sui potenziali interessi attivi[cite: 1].
 
-**Conclusione:** L'algoritmo è stato progettato e tarato con l'obiettivo primario di minimizzare i Falsi Positivi, accettando un lieve incremento fisiologico dei Falsi Negativi al fine di proteggere la liquidità e i bilanci dell'istituto bancario.
+L'utilizzo del Random Forest abbinato all'analisi per fasce d'età offre alla direzione bancaria uno strumento decisionale solido per minimizzare i Falsi Positivi, tutelando la liquidità e i bilanci dell'istituto.
