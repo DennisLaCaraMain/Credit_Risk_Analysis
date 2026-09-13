@@ -32,4 +32,4 @@ Il risultato espresso in probabilità percentuali permette all'istituto di impos
 *   **Il Falso Positivo (Rischio Primario):** Si verifica quando il modello classifica erroneamente il cliente come sicuro e la banca eroga i fondi. Genera una perdita diretta del capitale prestato.
 *   **Il Falso Negativo (Costo Opportunità):** Si verifica quando il modello è eccessivamente prudente e rifiuta un cliente affidabile. Causa alla banca un mancato guadagno sui potenziali interessi attivi.
 
-L'architettura di questo modello è orientata a minimizzare i Falsi Positivi, tutelando attivamente la liquidità e i bilanci dell'istituto di credito.
+L'architettura di questo modello è orientata a minimizzare i Falsi Positivi.
