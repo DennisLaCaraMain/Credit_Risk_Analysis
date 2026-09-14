@@ -11,7 +11,7 @@ L'algoritmo valuta il profilo di rischio incrociando i dati demografici con gli 
 *   **0 (Default):** Cliente insolvente o con ritardi.
 
 **Features Predittive:**
-*   **Età e Anzianità Lavorativa:** Utilizzate per isolare il rischio demografico e valutare la stabilità del reddito nel tempo.
+*   **Età e Anzianità Lavorativa:** Utilizzate per valutare la stabilità del reddito nel tempo.
 *   **Conto Corrente:** Misura della liquidità immediata per gli impegni a breve termine.
 *   **Patrimonio:** Misura della solidità a lungo termine che funge da garanzia (collaterale) per l'istituto.
 
