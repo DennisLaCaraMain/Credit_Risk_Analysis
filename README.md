@@ -1,7 +1,7 @@
 # Credit Risk Assessment & Default Prediction
 
 ## Obiettivo del Progetto
-Questo progetto implementa un modello predittivo in Python strutturato per calcolare la probabilità di insolvenza su un prestito bancario. Utilizzando il dataset **German Credit Data**, l'analisi supera la semplice accuratezza statistica per adottare una prospettiva gestionale: le probabilità estratte dal modello servono a ottimizzare le decisioni di erogazione, minimizzando i costi operativi aziendali.
+Questo progetto implementa un modello predittivo in Python strutturato per calcolare la probabilità di insolvenza su un prestito bancario. Utilizzando il dataset **German Credit Data**: le probabilità estratte dal modello servono a ottimizzare le decisioni di erogazione, minimizzando i costi operativi aziendali.
 
 ## Struttura del Dataset e Variabili Chiave
 L'algoritmo valuta il profilo di rischio incrociando i dati demografici con gli attributi finanziari.
