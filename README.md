@@ -33,3 +33,6 @@ Il risultato espresso in probabilità percentuali permette all'istituto di impos
 *   **Il Falso Negativo (Costo Opportunità):** Si verifica quando il modello è eccessivamente prudente e rifiuta un cliente affidabile. Causa alla banca un mancato guadagno sui potenziali interessi attivi.
 
 L'architettura di questo modello è orientata a minimizzare i Falsi Positivi.
+
+## Risultato
+![grafico a barre](docs/images/bar_chart.png)
