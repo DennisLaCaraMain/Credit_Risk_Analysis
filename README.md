@@ -36,3 +36,5 @@ L'architettura di questo modello è orientata a minimizzare i Falsi Positivi.
 
 ## Risultato
 ![grafico a barre](docs/images/bar_chart.png)
+> Di conseguenza, per proteggere i bilanci della banca ed evitare i costosi Falsi Positivi, l'istituto utilizzerà le percentuali del modello per decidere di non erogare credito "alla cieca" su quelle fasce, richiedendo
+ulteriori solide garanzie per diminuire il rischio ed eventualmente procedere all'erogazione del prestito.
