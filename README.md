@@ -7,7 +7,7 @@ Questo progetto implementa un modello predittivo in Python strutturato per calco
 L'algoritmo valuta il profilo di rischio incrociando i dati demografici con gli attributi finanziari.
 
 **Variabile Target ('credito'):**
-*   **1 (Buon Pagatore):** Cliente a basso rischio che rispetta gli obblighi.
+*   **1 (Non Default):** Cliente a basso rischio che rispetta gli obblighi.
 *   **0 (Default):** Cliente insolvente o con ritardi.
 
 **Features Predittive:**
