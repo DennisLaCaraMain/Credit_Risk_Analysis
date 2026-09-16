@@ -55,7 +55,6 @@ prob_media_fascia = risultati.groupby('fascia_età')['prob_insolvenza'].mean().r
 # CREAZIONE GRAFICO A BARRE
 plt.figure(figsize=(10, 6))
 
-# Sostituiamo lo scatter plot con un grafico a barre (plt.bar)
 plt.bar(prob_media_fascia['fascia_età'], prob_media_fascia['prob_insolvenza'],
         color='steelblue', edgecolor='black', alpha=0.8)
 
