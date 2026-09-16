@@ -7,26 +7,33 @@ import matplotlib.pyplot as plt
 # FASE 1: Caricamento e Preparazione Dati
 # 1. Carichiamo il dataset Excel
 df = pd.read_excel('german_credit_data.xlsx')
+print(df.T[1]) #stampa la prima riga della tabella T
 
 # 2. Data Exploration: Gestiamo i valori mancanti
-df = df.dropna()
+df = df.dropna() #cancella le righe (cioè i clienti) che contengono almeno un valore nullo, es: 'credito' ~ NULL
 
 # 3. Definiamo le features usando i NOMI ESATTI del tuo file Excel
 features_cols = ['età', 'conto corrente', 'patrimonio', 'anzianità lavorativa']
 target_col = 'credito'
 
-X = df[features_cols]
-y = df[target_col]
+X = df[features_cols] #colonne con features
+y = df[target_col] # colonna con il target 0/1
+#ad ogni riga di features corrisponde un certo esito (target) 0/1
 
 # Trasformiamo eventuali variabili categoriche in numeri (One-Hot Encoding)
-X = pd.get_dummies(X, drop_first=True)
+X = pd.get_dummies(X, drop_first=True) # conversione superflua perchè il dataset è già numericamente convertito
 
 # FASE 2: Addestramento del Modello
 # Dividiamo i dati: 70% per addestrare, 30% per testare
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+#NB: il test_size è una percentuale unitaria che indica la quantità di dati da utilizzare per il test (0.3~ 30%);
+# il random_state è il seme di casualità, forza Python a eseguire questo mescolamento in modo esattamente identico a ogni avvio del programma;
+# in questo caso 42...numero non proprio a caso :)
 
 # Inizializziamo l'algoritmo
 modello = RandomForestClassifier(random_state=42)
+#abbiamo impostato un seme anche qui, che non deve essere necessariamente uguale a quello per selezionare i dati
+# di test e allenamento... per coerenza scegliamo dinuovo il 42...NON NECESSARIO
 
 # Addestriamo il modello
 modello.fit(X_train, y_train)
@@ -34,13 +41,20 @@ modello.fit(X_train, y_train)
 # CALCOLO PROBABILITÀ E RAGGRUPPAMENTO A FASCE
 # Otteniamo le percentuali di rischio dal modello per il set di test
 percentuali = modello.predict_proba(X_test)
+print(percentuali)
+# si tratta di una LISTA di liste: [ [prob_default, prob_non_default], ... , [prob_default, prob_non_default]]
+# ogni lista della LISTA corrisponde all'esito rispetto una riga (cliente) del test
 
 # Estraiamo la probabilità di default (Classe 0)
-prob_insolvenza_predetta = percentuali[:, 0]
+prob_insolvenza_predetta = percentuali[:, 0] #estrazione dell'elemento di indice 0 per ogni lista della LISTA. Sintassi valida per array Numpy
+print(prob_insolvenza_predetta) #quindi abbiamo una lista di valori di default
 
 # Creiamo un DataFrame con i risultati
 risultati = X_test.copy()
-risultati['prob_insolvenza'] = prob_insolvenza_predetta
+risultati['prob_insolvenza'] = prob_insolvenza_predetta #Prende la colonna dei numeri decimali appena calcolata
+                                                        # dall'algoritmo (la probabilità di default che avevamo estratto con
+                                                        # predict_proba) e la affianca come nuova colonna chiamata
+                                                        # 'prob_insolvenza' all'interno della nostra tabella risultati;
 
 # Definiamo i limiti delle fasce e le etichette da mostrare
 limiti_eta = [18, 25, 35, 45, 55, 65, 120] # 120 serve a coprire chiunque abbia più di 65 anni
