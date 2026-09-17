@@ -36,9 +36,11 @@ L'architettura di questo modello è orientata a minimizzare i Falsi Positivi.
 
 ## Risultati
 <p align="center">
-  <img src="docs/images/confronto_matrici.png" width="600" alt="Tabella di Confronto Strategico">
+  <img src="docs/images/confronto_matrici.png" width="450" alt="Tabella di Confronto Strategico">
 </p>
+
 > **Matrice Iniziale (Soglia 50%):** Con la soglia decisionale di default, il modello risulta troppo "generoso". Approva prestiti con troppa facilità, generando ben 52 **Falsi Positivi** (clienti insolventi classificati come sicuri). Questo espone l'istituto a un rischio inaccettabile e a una massiccia perdita diretta del capitale erogato.
+
 > **Matrice Ottimizzata (Soglia Severa 75%):** Sfruttando le probabilità continue calcolate dall'algoritmo, la soglia di approvazione è stata alzata al 75%. Il modello diventa così più prudente: i **Falsi Positivi crollano da 52 a 33**, tutelando attivamente la liquidità della banca. L'aumento dei Falsi Negativi (da 37 a 71) rappresenta un fisiologico costo opportunità (interessi persi) che la direzione accetta volentieri pur di "blindare" la cassa contro le insolvenze.
 
 ![grafico a barre](docs/images/bar_chart.png)
