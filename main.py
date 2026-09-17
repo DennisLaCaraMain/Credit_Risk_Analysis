@@ -34,6 +34,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 #NB: il test_size è una percentuale unitaria che indica la quantità di dati da utilizzare per il test (0.3~ 30%);
 # il random_state è il seme di casualità, forza Python a eseguire questo mescolamento in modo esattamente identico a ogni avvio del programma;
 # in questo caso 42...numero non proprio a caso :)
+# mentre stratify evita campionamenti sbilanciati
 
 # Inizializziamo l'algoritmo
 modello = RandomForestClassifier(random_state=42)
