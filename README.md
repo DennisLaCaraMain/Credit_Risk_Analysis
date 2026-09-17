@@ -35,7 +35,7 @@ Il risultato espresso in probabilità percentuali permette all'istituto di impos
 L'architettura di questo modello è orientata a minimizzare i Falsi Positivi.
 
 ## Risultati
-<p>
+<p align="center">
   <img src="docs/images/confronto_matrici.png" width="550" alt="Tabella di Confronto Strategico">
 </p>
 
