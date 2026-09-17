@@ -25,7 +25,12 @@ X = pd.get_dummies(X, drop_first=True) # conversione superflua perchè il datase
 
 # FASE 2: Addestramento del Modello
 # Dividiamo i dati: 70% per addestrare, 30% per testare
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.3,
+    random_state=42,
+    stratify=y
+)
 #NB: il test_size è una percentuale unitaria che indica la quantità di dati da utilizzare per il test (0.3~ 30%);
 # il random_state è il seme di casualità, forza Python a eseguire questo mescolamento in modo esattamente identico a ogni avvio del programma;
 # in questo caso 42...numero non proprio a caso :)
