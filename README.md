@@ -7,7 +7,7 @@ Questo progetto implementa un modello predittivo in Python strutturato per calco
 L'algoritmo valuta il profilo di rischio incrociando i dati demografici con gli attributi finanziari.
 
 **Variabile Target ('credito'):**
-*   **1 (Buon Pagatore):** Cliente a basso rischio che rispetta gli obblighi.
+*   **1 (Non Default):** Cliente a basso rischio che rispetta gli obblighi.
 *   **0 (Default):** Cliente insolvente o con ritardi.
 
 **Features Predittive:**
@@ -33,3 +33,8 @@ Il risultato espresso in probabilità percentuali permette all'istituto di impos
 *   **Il Falso Negativo (Costo Opportunità):** Si verifica quando il modello è eccessivamente prudente e rifiuta un cliente affidabile. Causa alla banca un mancato guadagno sui potenziali interessi attivi.
 
 L'architettura di questo modello è orientata a minimizzare i Falsi Positivi.
+
+## Risultato
+![grafico a barre](docs/images/bar_chart.png)
+> Di conseguenza, per proteggere i bilanci della banca ed evitare i costosi Falsi Positivi, l'istituto utilizzerà le percentuali del modello per decidere di non erogare credito "alla cieca" su quelle fasce, richiedendo
+ulteriori solide garanzie per diminuire il rischio ed eventualmente procedere all'erogazione del prestito.
