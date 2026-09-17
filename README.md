@@ -34,7 +34,17 @@ Il risultato espresso in probabilità percentuali permette all'istituto di impos
 
 L'architettura di questo modello è orientata a minimizzare i Falsi Positivi.
 
-## Risultato
-![grafico a barre](docs/images/bar_chart.png)
-> Di conseguenza, per proteggere i bilanci della banca ed evitare i costosi Falsi Positivi, l'istituto utilizzerà le percentuali del modello per decidere di non erogare credito "alla cieca" su quelle fasce, richiedendo
-ulteriori solide garanzie per diminuire il rischio ed eventualmente procedere all'erogazione del prestito.
+## Risultati
+<p align="center">
+  <img src="docs/images/confronto_matrici.png" width="550" alt="Tabella di Confronto Strategico">
+</p>
+
+> **Matrice Iniziale (Soglia 50%):** Con la soglia decisionale di default, il modello risulta troppo "generoso". Approva prestiti con troppa facilità, generando ben 52 **Falsi Positivi** (clienti insolventi classificati come sicuri). Questo espone l'istituto a un rischio inaccettabile e a una massiccia perdita diretta del capitale erogato.
+
+> **Matrice Ottimizzata (Soglia Severa 75%):** Sfruttando le probabilità continue calcolate dall'algoritmo, la soglia di approvazione è stata alzata al 75%. Il modello diventa così più prudente: i **Falsi Positivi crollano da 52 a 33**, tutelando attivamente la liquidità della banca. L'aumento dei Falsi Negativi (da 37 a 71) rappresenta un fisiologico costo opportunità (interessi persi) che la direzione accetta volentieri pur di "blindare" la cassa contro le insolvenze.
+
+<p align="center">
+  <img src="docs/images/bar_chart.png" width="550" alt="Grafico a barre probabilità di insolvenza per fascia d'età">
+</p>
+
+> Di conseguenza, per proteggere i bilanci della banca ed evitare i costosi Falsi Positivi, l'istituto utilizzerà le percentuali del modello per decidere di non erogare credito "alla cieca" su quelle fasce, richiedendo ulteriori solide garanzie per diminuire il rischio ed eventualmente procedere all'erogazione del prestito.
