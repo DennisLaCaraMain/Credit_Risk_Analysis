@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # FASE 1: Caricamento e Preparazione Dati
 # 1. Carichiamo il dataset Excel
 df = pd.read_excel('german_credit_data.xlsx')
-print(df.T[1]) #stampa la prima riga della tabella T
+#print(df.T[1]) #stampa la prima riga della tabella T
 
 # 2. Data Exploration: Gestiamo i valori mancanti
 df = df.dropna() #cancella le righe (cioè i clienti) che contengono almeno un valore nullo, es: 'credito' ~ NULL
@@ -37,17 +37,59 @@ modello = RandomForestClassifier(random_state=42)
 
 # Addestriamo il modello
 modello.fit(X_train, y_train)
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    classification_report,
+    roc_auc_score
+)
 
-# CALCOLO PROBABILITÀ E RAGGRUPPAMENTO A FASCE
+# 1. PREDIZIONI E PROBABILITÀ BASE
+# Predizioni "secche" (0 o 1) del modello con soglia standard al 50%
+y_pred = modello.predict(X_test)
+
 # Otteniamo le percentuali di rischio dal modello per il set di test
+# Restituisce un array 2D: [[prob_default, prob_buon_pagatore], ...]
 percentuali = modello.predict_proba(X_test)
-print(percentuali)
-# si tratta di una LISTA di liste: [ [prob_default, prob_non_default], ... , [prob_default, prob_non_default]]
-# ogni lista della LISTA corrisponde all'esito rispetto una riga (cliente) del test
 
 # Estraiamo la probabilità di default (Classe 0)
-prob_insolvenza_predetta = percentuali[:, 0] #estrazione dell'elemento di indice 0 per ogni lista della LISTA. Sintassi valida per array Numpy
-print(prob_insolvenza_predetta) #quindi abbiamo una lista di valori di default
+prob_insolvenza_predetta = percentuali[:, 0]
+
+# Estraiamo la probabilità che il cliente sia un BUON PAGATORE (Classe 1)
+prob_buon_pagatore = percentuali[:, 1]
+
+# 2. METRICHE DI VALUTAZIONE (SOGLIA 50%)
+print("\nVALUTAZIONE DEL MODELLO (SOGLIA 50%)")
+
+# Accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.2f}")
+
+# Confusion matrix (Il cuore del tuo README)
+print("\nMATRICE DI CONFUSIONE (Impatto di Business):")
+print(confusion_matrix(y_test, y_pred))
+
+# Classification report
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+# ROC-AUC (Calcolato sul rischio di default)
+# Nota: Di base scikit-learn calcola l'AUC sulla classe positiva (1).
+auc = roc_auc_score(y_test, prob_buon_pagatore)
+print(f"ROC-AUC: {auc:.2f}")
+
+# 3. OTTIMIZZAZIONE DI BUSINESS (SOGLIA 75%)
+# Definiamo la nostra nuova soglia "severa" al 75%
+soglia_sicurezza = 0.75
+
+# Creiamo le nuove predizioni: 1 (Eroga) se supera la soglia, altrimenti 0 (Rifiuta)
+y_pred_severo = (prob_buon_pagatore >= soglia_sicurezza).astype(int)
+# nella tabella risultati è possibile verificare che i clienti a cui è assegnata un tasso di
+# insolvenza >= 0.25, allora viene assegnato il default.
+
+# Verifichiamo il nuovo impatto aziendale
+print(f"\n MATRICE DI CONFUSIONE (SOGLIA {int(soglia_sicurezza*100)}%)")
+print(confusion_matrix(y_test, y_pred_severo))
 
 # Creiamo un DataFrame con i risultati
 risultati = X_test.copy()
@@ -55,6 +97,7 @@ risultati['prob_insolvenza'] = prob_insolvenza_predetta #Prende la colonna dei n
                                                         # dall'algoritmo (la probabilità di default che avevamo estratto con
                                                         # predict_proba) e la affianca come nuova colonna chiamata
                                                         # 'prob_insolvenza' all'interno della nostra tabella risultati;
+risultati['decisione_modello_severo'] = y_pred_severo
 
 # Definiamo i limiti delle fasce e le etichette da mostrare
 limiti_eta = [18, 25, 35, 45, 55, 65, 120] # 120 serve a coprire chiunque abbia più di 65 anni
